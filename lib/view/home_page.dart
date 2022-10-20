@@ -17,8 +17,17 @@ class HomePage extends StatelessWidget {
       ),
       body: SafeArea(
         child: provider.searchResults.isEmpty
-            ? const Center(
-                child: Text("OOPs..Unable to fetch the data"),
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("OOPs..Unable to fetch the data"),
+                    ElevatedButton(
+                        onPressed: (() async =>
+                            await provider.fetchAllSongs(context)),
+                        child: const Text("Refresh"))
+                  ],
+                ),
               )
             : ListView(
                 children: provider.searchResults
@@ -30,11 +39,11 @@ class HomePage extends StatelessWidget {
 }
 
 class DataCard extends StatelessWidget {
-  DataCard({
+  const DataCard({
     required this.songData,
     Key? key,
   }) : super(key: key);
-  Results songData;
+  final Results songData;
   @override
   Widget build(BuildContext context) {
     return ListTile(

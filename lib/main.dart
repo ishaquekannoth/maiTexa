@@ -4,6 +4,7 @@ import 'package:mai_texa/controller/home_page_controller.dart';
 import 'package:mai_texa/services/routes.dart';
 import 'package:mai_texa/view/details_page.dart';
 import 'package:mai_texa/view/home_page.dart';
+import 'package:mai_texa/view/splash.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -18,17 +19,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => HomePageViewModel())
+        ChangeNotifierProvider(create: (context) => HomePageViewModel(context))
       ],
       child: MaterialApp(
         title: 'Songs',
         theme: ThemeData(
           fontFamily: GoogleFonts.montserrat().fontFamily,
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.deepPurple,
         ),
-        initialRoute: Routes.home,
+        initialRoute: Routes.splash,
         routes: {Routes.home: (context) => const HomePage(),
-        Routes.details: (context) => const Details()
+        Routes.details: (context) => const Details(),
+        Routes.splash: (context) => const SplashScreen(),
         },
       ),
     );

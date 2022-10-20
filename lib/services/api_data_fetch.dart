@@ -1,26 +1,33 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:mai_texa/model/song_detail_model.dart';
 import 'package:mai_texa/services/url.dart';
 
 class FetchData {
-  Future<SongsModel?> fetchDataFromNetwork() async {
+  Future<SongsModel?> fetchDataFromNetwork(context) async {
     final connectionOk = await isConnectionOk();
     if (connectionOk) {
       try {
         final response = await DioService.getMethod(url: apiUrl);
         if (response.statusCode >= 200 || response.statusCode <= 299) {
-          return SongsModel.fromJson(jsonDecode(response.data)as Map<String,dynamic> );
+          return SongsModel.fromJson(
+              jsonDecode(response.data) as Map<String, dynamic>);
         }
       } on DioError {
-        return SongsModel(resultCount: 0);
+        return null;
       } on Exception {
-        return SongsModel(resultCount: 0);
+        return null;
       }
     } else {
-      return SongsModel(resultCount: 0);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(
+            backgroundColor: Colors.red,
+            content: Text("No Connection",textAlign: TextAlign.center,)));
+      return null;
     }
-    return SongsModel(resultCount: 0);
+
+    return null;
   }
 }
