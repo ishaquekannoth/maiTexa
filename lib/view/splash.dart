@@ -13,7 +13,7 @@ class SplashScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final controller = Provider.of<HomePageViewModel>(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Timer(const Duration(seconds: 2), () {
+      Timer(const Duration(seconds: 3), () {
         controller.fetchAllSongs(context);
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => const HomePage()),
@@ -22,15 +22,19 @@ class SplashScreen extends StatelessWidget {
     });
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         body: Container(
           width: size.width,
-          height: size.height,
+          height: size.height * 0.5,
           decoration: const BoxDecoration(
-            
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(15),
+                  bottomLeft: Radius.circular(15)),
               image: DecorationImage(
-                fit: BoxFit.cover,
-                  image: AssetImage("lib/Assets/splash_image.jpg",))),
+                  fit: BoxFit.cover,
+                  image: AssetImage(
+                    "lib/Assets/splash_image.jpg",
+                  ))),
         ),
       ),
     );

@@ -1,27 +1,19 @@
+import 'dart:convert';
+
+SongsModel songsModelFromJson(String str) =>
+    SongsModel.fromJson(json.decode(str));
+
 class SongsModel {
   int? resultCount;
   List<Results>? results;
 
   SongsModel({this.resultCount, this.results});
 
-  SongsModel.fromJson(Map<String, dynamic> json) {
-    resultCount = json['resultCount'];
-    if (json['results'] != null) {
-      results = <Results>[];
-      json['results'].forEach((v) {
-        results!.add(Results.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['resultCount'] = resultCount;
-    if (results != null) {
-      data['results'] = results!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  factory SongsModel.fromJson(Map<String, dynamic> json) => SongsModel(
+        resultCount: json["resultCount"],
+        results:
+            List<Results>.from(json["results"].map((x) => Results.fromJson(x))),
+      );
 }
 
 class Results {
@@ -140,47 +132,5 @@ class Results {
     contentAdvisoryRating = json['contentAdvisoryRating'];
     collectionArtistId = json['collectionArtistId'];
     collectionArtistName = json['collectionArtistName'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['wrapperType'] = wrapperType;
-    data['artistId'] = artistId;
-    data['collectionId'] = collectionId;
-    data['artistName'] = artistName;
-    data['collectionName'] = collectionName;
-    data['collectionCensoredName'] = collectionCensoredName;
-    data['artistViewUrl'] = artistViewUrl;
-    data['collectionViewUrl'] = collectionViewUrl;
-    data['artworkUrl60'] = artworkUrl60;
-    data['artworkUrl100'] = artworkUrl100;
-    data['collectionPrice'] = collectionPrice;
-    data['collectionExplicitness'] = collectionExplicitness;
-    data['trackCount'] = trackCount;
-    data['copyright'] = copyright;
-    data['country'] = country;
-    data['currency'] = currency;
-    data['releaseDate'] = releaseDate;
-    data['primaryGenreName'] = primaryGenreName;
-    data['previewUrl'] = previewUrl;
-    data['description'] = description;
-    data['amgArtistId'] = amgArtistId;
-    data['kind'] = kind;
-    data['trackId'] = trackId;
-    data['trackName'] = trackName;
-    data['trackCensoredName'] = trackCensoredName;
-    data['trackViewUrl'] = trackViewUrl;
-    data['artworkUrl30'] = artworkUrl30;
-    data['trackPrice'] = trackPrice;
-    data['trackExplicitness'] = trackExplicitness;
-    data['discCount'] = discCount;
-    data['discNumber'] = discNumber;
-    data['trackNumber'] = trackNumber;
-    data['trackTimeMillis'] = trackTimeMillis;
-    data['isStreamable'] = isStreamable;
-    data['contentAdvisoryRating'] = contentAdvisoryRating;
-    data['collectionArtistId'] = collectionArtistId;
-    data['collectionArtistName'] = collectionArtistName;
-    return data;
   }
 }
